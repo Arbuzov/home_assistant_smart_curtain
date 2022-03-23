@@ -1,63 +1,37 @@
-'''
-Created on 19 мар. 2022 г.
-
-@author: info
-'''
+import asyncio
 from binascii import hexlify
 import logging
 
 from homeassistant.backports.enum import StrEnum
 from homeassistant.const import CONF_MAC, CONF_NAME
-from homeassistant.helpers import device_registry as dr
 import pygatt
 
-from .const import DOMAIN
+from ..const import DOMAIN
+from .abstract import SmartCurtainDevice
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class SmartCurtainDeviceEntity:
-    """Entity class for the Delonghi devices"""
-
-    def __init__(self, device):
-        """Init entity with the device"""
-        self._attr_unique_id = \
-            f'{device.mac}_{self.__class__.__name__}'
-        self.device: SmartCurtainDevice = device
-
-    @property
-    def device_info(self):
-        """Shared device info information"""
-        return {
-            'identifiers': {(DOMAIN, self.device.mac)},
-            'connections': {
-                (dr.CONNECTION_NETWORK_MAC, self.device.mac)
-            },
-            'name': self.device.name,
-            'manufacturer': 'Whitediver',
-            'model': self.device.model
-        }
-
-
-class SmartCurtainDevice:
+class SmartCurtainDeviceBLE(SmartCurtainDevice):
     """Delongi Primadonna class"""
 
     def __init__(self, config: dict) -> None:
         """Initialize."""
         self.mac = config.get(CONF_MAC)
         self.name = config.get(CONF_NAME)
-        self.model = 'Smart curtain'
+        self.model = 'Smart curtain BLE'
         self.friendly_name = ''
         self.adapter = pygatt.GATTToolBackend()
         self.error_count = 0
         self.success_count = 0
+        self.loop = asyncio.new_event_loop()
 
-    def get_voltage(self):
+    def get_battery(self):
+        _LOGGER.info("Nonblocking connection")
         result = 0
         uuid = "00002a19-0000-1000-8000-00805f9b34fb"
         self.adapter.start(reset_on_start=False)
-
         try:
             device = self.adapter.connect(self.mac, timeout=20)
             result = int.from_bytes(device.char_read(uuid), byteorder='little')

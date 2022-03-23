@@ -6,7 +6,7 @@ from typing import Any
 
 import voluptuous
 from homeassistant import config_entries
-from homeassistant.const import CONF_MAC, CONF_NAME
+from homeassistant.const import CONF_MAC, CONF_NAME, CONF_IP_ADDRESS
 from homeassistant.data_entry_flow import FlowResult
 
 from .const import DOMAIN
@@ -19,8 +19,14 @@ STEP_USER_DATA_SCHEMA = voluptuous.Schema(
             CONF_NAME,
             description={'suggested_value': 'My Precious'}
         ): str,
-        voluptuous.Required(CONF_MAC,
-                            description={'suggested_value': '9C:9C:1F:C7:3D:F2'}): str
+        voluptuous.Required(
+            CONF_MAC,
+            description={'suggested_value': '9C:9C:1F:C7:3D:F2'}
+        ): str,
+        voluptuous.Required(
+            CONF_IP_ADDRESS,
+            description={'suggested_value': '192.168.99.8'}
+        ): str
     }
 )
 

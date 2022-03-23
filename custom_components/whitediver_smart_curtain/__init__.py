@@ -6,17 +6,23 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
-from .device import SmartCurtainDevice
+from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi
 
-PLATFORMS: list[str] = [Platform.SENSOR]
+
+PLATFORMS: list[str] = [
+    Platform.SENSOR,
+    Platform.DEVICE_TRACKER,
+    Platform.COVER
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up oiot from a config entry."""
     if DOMAIN not in hass.data:
         hass.data[DOMAIN] = {}
-    delonghi_device = SmartCurtainDevice(entry.data)
-    hass.data[DOMAIN][entry.unique_id] = delonghi_device
+
+    device = SmartCurtainDeviceWiFi(entry.data)
+    hass.data[DOMAIN][entry.unique_id] = device
     hass.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
