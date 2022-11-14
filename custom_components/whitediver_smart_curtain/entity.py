@@ -2,7 +2,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
 
 from .const import DOMAIN
-from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi, SmartCurtainDevice
+from .device import (SmartCurtainDevice, SmartCurtainDeviceBLE,
+                     SmartCurtainDeviceWiFi)
 
 
 class SmartCurtainDeviceEntity:

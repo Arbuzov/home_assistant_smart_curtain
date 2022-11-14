@@ -20,5 +20,5 @@ class SmartCurtainDevice:
     async def close(self):
         raise NotImplementedError
 
-    async def set_position(self):
+    async def set_position(self, position):
         raise NotImplementedError

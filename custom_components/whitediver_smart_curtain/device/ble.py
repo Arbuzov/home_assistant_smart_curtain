@@ -1,14 +1,13 @@
 import asyncio
-from binascii import hexlify
 import logging
+from binascii import hexlify
 
+import pygatt
 from homeassistant.backports.enum import StrEnum
 from homeassistant.const import CONF_MAC, CONF_NAME
-import pygatt
 
 from ..const import DOMAIN
 from .abstract import SmartCurtainDevice
-
 
 _LOGGER = logging.getLogger(__name__)
 

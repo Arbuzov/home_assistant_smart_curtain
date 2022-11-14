@@ -42,4 +42,4 @@ class SmartCurtainDeviceTracker(SmartCurtainDeviceEntity, ScannerEntity):
     @property
     def is_connected(self) -> bool:
         """Return true if the device is connected to the network."""
-        return self.device.state != {}
+        return self.device.connected

@@ -6,7 +6,7 @@ from typing import Any
 
 import voluptuous
 from homeassistant import config_entries
-from homeassistant.const import CONF_MAC, CONF_NAME, CONF_IP_ADDRESS
+from homeassistant.const import CONF_IP_ADDRESS, CONF_MAC, CONF_NAME
 from homeassistant.data_entry_flow import FlowResult
 
 from .const import DOMAIN

@@ -8,11 +8,11 @@ from homeassistant.core import HomeAssistant
 from .const import DOMAIN
 from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi
 
-
 PLATFORMS: list[str] = [
     Platform.SENSOR,
     Platform.DEVICE_TRACKER,
-    Platform.COVER
+    Platform.COVER,
+    Platform.NUMBER
 ]
 
 

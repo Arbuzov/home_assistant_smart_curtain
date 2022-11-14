@@ -18,7 +18,6 @@ from .const import DOMAIN
 from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi
 from .entity import SmartCurtainDeviceEntity
 
-
 _LOGGER = logging.getLogger(__name__)
 
 
