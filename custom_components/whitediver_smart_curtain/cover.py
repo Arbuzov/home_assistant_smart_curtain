@@ -1,5 +1,3 @@
-from pickle import NONE
-
 from homeassistant.components.cover import (CoverDeviceClass, CoverEntity,
                                             CoverEntityFeature)
 from homeassistant.config_entries import ConfigEntry
@@ -25,7 +23,12 @@ async def async_setup_entry(
 class SmartCurtainCover(SmartCurtainDeviceEntity, CoverEntity):
 
     device_class = CoverDeviceClass.SHADE
-    supported_features = CoverEntityFeature.OPEN | CoverEntityFeature.CLOSE | CoverEntityFeature.SET_POSITION | CoverEntityFeature.STOP
+    supported_features = (
+        CoverEntityFeature.OPEN |
+        CoverEntityFeature.CLOSE |
+        CoverEntityFeature.SET_POSITION |
+        CoverEntityFeature.STOP
+    )
 
     @property
     def _attr_is_closed(self):

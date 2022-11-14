@@ -1,8 +1,8 @@
-'''
+"""
 Created on 19 мар. 2022 г.
 
-@author: info
-'''
+@author: info@whitediver.com
+"""
 from __future__ import annotations
 
 import logging
@@ -15,7 +15,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi
+from .device import SmartCurtainDevice
 from .entity import SmartCurtainDeviceEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -46,7 +46,9 @@ class SmartCurtainPowerSensor(SmartCurtainDeviceEntity, SensorEntity):
 
     async def async_update(self):
         try:
-            self._attr_native_value = await self.hass.async_add_executor_job(self.device.get_battery)
+            self._attr_native_value = await self.hass.async_add_executor_job(
+                self.device.get_battery
+            )
         except TypeError:
             _LOGGER.warn('type error')
 

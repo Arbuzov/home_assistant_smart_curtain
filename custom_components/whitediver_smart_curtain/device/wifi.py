@@ -3,7 +3,6 @@ import logging
 import aiohttp
 from homeassistant.const import CONF_IP_ADDRESS, CONF_MAC, CONF_NAME
 
-from ..const import DOMAIN
 from .abstract import SmartCurtainDevice
 
 _LOGGER = logging.getLogger(__name__)
@@ -26,14 +25,14 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         self.max_width = None
 
     def _check_responce(self, responce):
-        if "error" in responce:
+        if 'error' in responce:
             _LOGGER.error(responce)
 
     def get_battery(self):
         self.state.get('battery')
 
     async def async_update(self):
-        url = f"http://{self.ip}/api/status"
+        url = f'http://{self.ip}/api/status'
         try:
             session = aiohttp.ClientSession()
             resp = await session.get(url)
@@ -48,13 +47,14 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
                 self.is_closed = (self.state.get('position') < 1)
                 self.max_width = self.state.get('maxSteps')
             self.connected = True
-        except:
+        except Exception as error:
+            _LOGGER.error(error)
             self.connected = False
         finally:
             await session.close()
 
     async def reset_position(self):
-        url = f"http://{self.ip}/api/reposition/{self.current_cover_position}"
+        url = f'http://{self.ip}/api/reposition/{self.current_cover_position}'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()
@@ -64,7 +64,7 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         await session.close()
 
     async def set_position(self, position):
-        url = f"http://{self.ip}/api/position/{position}"
+        url = f'http://{self.ip}/api/position/{position}'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()
@@ -74,7 +74,7 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         await session.close()
 
     async def reset_max_width(self):
-        url = f"http://{self.ip}/api/maxsteps/{self.max_width}"
+        url = f'http://{self.ip}/api/maxsteps/{self.max_width}'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()
@@ -84,7 +84,7 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         await session.close()
 
     async def open(self):
-        url = f"http://{self.ip}/api/open"
+        url = f'http://{self.ip}/api/open'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()
@@ -94,7 +94,7 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         await session.close()
 
     async def close(self):
-        url = f"http://{self.ip}/api/close"
+        url = f'http://{self.ip}/api/close'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()
@@ -104,7 +104,7 @@ class SmartCurtainDeviceWiFi(SmartCurtainDevice):
         await session.close()
 
     async def stop(self):
-        url = f"http://{self.ip}/api/stop"
+        url = f'http://{self.ip}/api/stop'
         session = aiohttp.ClientSession()
         resp = await session.get(url)
         responce = await resp.json()

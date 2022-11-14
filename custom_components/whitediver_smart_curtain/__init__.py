@@ -6,7 +6,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
-from .device import SmartCurtainDeviceBLE, SmartCurtainDeviceWiFi
+from .device import SmartCurtainDeviceWiFi
 
 PLATFORMS: list[str] = [
     Platform.SENSOR,
