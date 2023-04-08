@@ -26,8 +26,9 @@ async def async_setup_entry(
 class SmartCurtainWidthEntity(SmartCurtainDeviceEntity, NumberEntity):
 
     _attr_name = 'Maximum width'
-#    _attr_native_min_value = 0
-#    _attr_native_step = 1
+    _attr_native_min_value = 0
+    _attr_native_max_value = 10000
+    _attr_attr_native_step = 1
     _attr_mode = 'box'
 
     @property
